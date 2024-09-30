@@ -1,5 +1,6 @@
 package second_version;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -39,8 +40,10 @@ class CanvasPanel extends JPanel {
 
     void drawArrow(Graphics2D graphics, int x1, int y1, int x2, int y2, int intervals) {
         graphics.drawLine(x1, y1, x2, y2);
-        // temp solution
+        graphics.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 7));
         // todo: - rewrite logic to support rotating arrows
+        //       - add logic for measurement system, f.e. km, m, kg
+        //       - make numbers for X and Y appear in the middle and dynamically
         if (x2 > x1) {
             // here we draw an arrow head
             graphics.fillPolygon(
@@ -50,6 +53,7 @@ class CanvasPanel extends JPanel {
             );
             for (int i = x1; i < x2; i += intervals) {
                 graphics.drawLine(i, y1 + 2, i, y1 - 2);
+                graphics.drawString("" + i, i, y1 - 6);
             }
         } else if (y2 > y1) {
             // here we draw an arrow head
@@ -58,8 +62,9 @@ class CanvasPanel extends JPanel {
                 new int[] {y2, y2 + 5, y2,     y2,     y2 + 5},
                 5
             );
-            for (int i = y1; i < y2; i += intervals) {
+            for (int i = y1 + intervals; i < y2; i += intervals) {
                 graphics.drawLine(x1 + 2, i, x1 - 2, i);
+                graphics.drawString("" + i, x1 - 20, i);
             }
         }
 
